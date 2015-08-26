@@ -46,14 +46,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\SplitPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SplitPanel.Designer.cs">
+      <DependentUpon>SplitPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMain.Designer.cs">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Controls\SplitPanel.resx">
+      <DependentUpon>SplitPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMain.resx">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -62,6 +83,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -75,6 +97,117 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Circle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\igmTag.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgAlert.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgBroadcast.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgBubble.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgCalendar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgCheck.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgClock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgClose.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgClose1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgCollapse.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgCritical.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgDocument.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgEdit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgEnvelope.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgFolder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgHeart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgHome.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgInfo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgLock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgMagnify.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgMinimize.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgMobile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgNewMap.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgPlus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgQuestion.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgRefresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgShop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgStar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgThingy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgTools.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\imgUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Point.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Square.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
