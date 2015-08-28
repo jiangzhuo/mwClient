@@ -78,6 +78,9 @@
     <EmbeddedResource Include="Controls\Grid.resx">
       <DependentUpon>Grid.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\GridControl.resx">
+      <DependentUpon>GridControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\SplitPanel.resx">
       <DependentUpon>SplitPanel.cs</DependentUpon>
     </EmbeddedResource>
@@ -221,6 +224,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Square.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\pomelo-dotnetClient\pomelo-dotnetClient.csproj">
+      <Project>{0752f53d-46ef-44e2-aaa9-f2fab9f0c4fa}</Project>
+      <Name>pomelo-dotnetClient</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

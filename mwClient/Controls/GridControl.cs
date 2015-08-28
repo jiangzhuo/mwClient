@@ -23,18 +23,29 @@ namespace mwClient.Controls
         Line,
     }
 
+    public enum TerrainTypes
+    {
+        Water,
+        Land,
+        ThroneOuter,
+        ThroneInner,
+        Board
+    }
+
     public class GridControl : Control
     {
 
 
         //private ToolShape m_selectionShape;
-        private int m_selectionSize;
+        //private int m_selectionSize;
 
         //public World m_world;
 
         private float m_cellHeight;
         private float m_cellWidth;
-        private int[,] mapArray;
+        public dynamic mapArray;
+        private float mapWidth = 512;
+        private float mapHeight = 512;
 
         private float m_translateX;
         private float m_translateY;
@@ -59,8 +70,8 @@ namespace mwClient.Controls
         private Pen m_gridPen;
         private Brush m_selectedCellBrush;
         private Brush m_highlightedCellBrush;
-        
-        private bool m_showDebug;
+
+        //private bool m_showDebug;
         private Font m_debugFont;
         private Brush m_debugBackgroundBrush;
         private Brush m_debugForegroundBrush;
@@ -141,13 +152,15 @@ namespace mwClient.Controls
             //ToolShape = ToolShape.Point;
             //ToolSize = 40;
 
-            var assembly = Assembly.GetExecutingAssembly();
-            var resourceName = "mindway.json";
-            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                string result = reader.ReadToEnd();
-            }
+            //var assembly = Assembly.GetExecutingAssembly();
+            //var resourceName = "mindway";
+            //using (Stream stream = assembly.GetManifestResourceStream(resourceName))
+            //using (StreamReader reader = new StreamReader(stream))
+            //{
+            //    string result = reader.ReadToEnd();
+            //    mapArray = SimpleJson.SimpleJson.DeserializeObject(result);
+            //}
+
 
 
             m_cellHeight = 16.0f;
@@ -183,7 +196,15 @@ namespace mwClient.Controls
         protected override void OnPaint(PaintEventArgs e)
         {
             Matrix m = e.Graphics.Transform.Clone();
-            
+            //if (m_translateX > 0)
+            //{
+            //    m_translateX = 0;
+            //}
+            //if (m_translateY > 0)
+            //{
+            //    m_translateY = 0;
+            //}
+
             m.Translate(m_translateX, m_translateY);
             m.Scale(m_scale, m_scale);
             m.Rotate(m_rotateAngle);
@@ -196,10 +217,10 @@ namespace mwClient.Controls
             PaintCells(e.Graphics);
             PaintHighlightedCell(e.Graphics);
 
-            if (m_showDebug)
-            {
-                PaintDebug(e.Graphics);
-            }
+            //if (m_showDebug)
+            //{
+            //    PaintDebug(e.Graphics);
+            //}
 
             PaintBorder(e.Graphics);
         }
@@ -211,115 +232,95 @@ namespace mwClient.Controls
             int rgb, cellX, cellY, totalCells;
 
             //TerrainTile room = null;
+            var selectPos = new Point();
             Color cellColor = Color.White;
 
             Dictionary<PointF, string> cityNames = new Dictionary<PointF, string>();
             cellX = (int)m_viewport.Left;
             cellY = (int)m_viewport.Top;
             totalCells = (int)((m_viewport.Width + 1) * (m_viewport.Height + 1));
-            
-            //if (m_world != null)
-            //{
-            //    for (int index = 0; index < totalCells; index++)
-            //    {
-            //        room = m_world.LoadTile(cellX, cellY);
 
-            //        colorPercent = room.Height / m_world.TerrainHeight;
-            //        rgb = (int)Math.Max(Math.Min(255 * Math.Abs(colorPercent), 255), 0);
+            if (mapArray != null)
+            {
+                for (int index = 0; index < totalCells; index++)
+                {
 
-            //        if(m_tempMap)
-            //        {
-            //            colorPercent = (float)(room.m_temp / 50);
-            //            rgb = (int)Math.Max(Math.Min(255 * Math.Abs(colorPercent), 255), 0);
-            //            cellColor = Color.FromArgb(255, rgb, 0, 255-rgb);
-            //        }
-            //        else if (m_heightMap)
-            //        {
-            //            if (room.Height > m_world.CoastLine)
-            //            {
-            //                cellColor = Color.FromArgb(255, rgb, rgb, rgb);
-            //            }
-            //            else
-            //            {
-            //                cellColor = Color.FromArgb(255, 0, 0, 255 - rgb);
-            //            }
-            //        }
-            //        else
-            //        {
-            //            switch (room.Terrain)
-            //            {
-            //                case TerrainTypes.Ocean:
-            //                    cellColor = Color.FromArgb(255, 0, 0, 255 - rgb);
-            //                    break;
-            //                case TerrainTypes.Dirt:
-            //                    cellColor = ControlPaint.Light(Color.SaddleBrown, colorPercent);
-            //                    break;
-            //                case TerrainTypes.Sand:
-            //                    cellColor = ControlPaint.Light(Color.BurlyWood, colorPercent);
-            //                    break;
-            //                case TerrainTypes.Grass:
-            //                    RandomNoise rn = new RandomNoise(1);
+                    if (cellX < 0 || cellY < 0 || cellX >= 512 || cellY >= 512)
+                    {
+                    }
+                    else
+                    {
+                        var cellType = mapArray[cellX][cellY];
+                        //room = m_world.LoadTile(cellX, cellY);
+                        selectPos = new Point(cellX, cellY);
+                        //colorPercent = room.Height / m_world.TerrainHeight;
+                        colorPercent = 1;
+                        rgb = (int)Math.Max(Math.Min(255 * Math.Abs(colorPercent), 255), 0);
 
-            //                    double val = rn.GetValue(cellX, cellY);
+                        switch ((TerrainTypes)cellType)
+                        {
+                            case TerrainTypes.Water:
+                                cellColor = Color.Blue;
+                                break;
+                            case TerrainTypes.Land:
+                                cellColor = Color.Yellow;
+                                break;
+                            case TerrainTypes.ThroneOuter:
+                                cellColor = Color.DarkGreen;
+                                break;
+                            case TerrainTypes.ThroneInner:
+                                cellColor = Color.Gray;
+                                break;
+                            case TerrainTypes.Board:
+                                cellColor = Color.Black;
+                                break;
+                                //case TerrainTypes.Snow:
+                                //    cellColor = ControlPaint.Light(Color.LightGray, colorPercent);
+                                //    break;
+                                //case TerrainTypes.Lava:
+                                //    cellColor = Color.Red;
+                                //    break;
+                                //case TerrainTypes.Ice:
+                                //    cellColor = Color.Cyan;
+                                //    break;
+                                //case TerrainTypes.None:
+                                //    cellColor = Color.Black;
+                                //    break;
+                                //case TerrainTypes.Road:
+                                //    cellColor = Color.Yellow;
 
-            //                    if (val < .33)
-            //                        cellColor = Color.Green;
-            //                    else if (val < .66)
-            //                        cellColor = Color.ForestGreen;
-            //                    else
-            //                        cellColor = Color.DarkGreen;
-                                
-            //                    break;
-            //                case TerrainTypes.Stone:
-            //                    cellColor = Color.SlateGray;
-            //                    break;
-            //                case TerrainTypes.Snow:
-            //                    cellColor = ControlPaint.Light(Color.LightGray, colorPercent);
-            //                    break;
-            //                case TerrainTypes.Lava:
-            //                    cellColor = Color.Red;
-            //                    break;
-            //                case TerrainTypes.Ice:
-            //                    cellColor = Color.Cyan;
-            //                    break;
-            //                case TerrainTypes.None:
-            //                    cellColor = Color.Black;
-            //                    break;
-            //                case TerrainTypes.Road:
-            //                    cellColor = Color.Yellow;
+                                //    //City city = m_world.GetCity(cellX, cellY);
 
-            //                    //City city = m_world.GetCity(cellX, cellY);
+                                //    cityNames.Add(new PointF((cellX * m_cellWidth) + m_cellWidth, (cellY * m_cellHeight) + m_cellHeight), room.Name);
+                                //    break;
+                        }
+                        if (IsSelected(selectPos.X, selectPos.Y))
+                        {
+                            g.FillRectangle(new SolidBrush(Color.FromArgb(255, 255 - cellColor.R, 255 - cellColor.G, 255 - cellColor.B)), new RectangleF(selectPos.X * m_cellWidth, selectPos.Y * m_cellHeight, m_cellWidth, m_cellHeight));
+                        }
+                        else
+                        {
+                            g.FillRectangle(new SolidBrush(cellColor), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
+                        }
+                    }
 
-            //                    cityNames.Add(new PointF((cellX * m_cellWidth) + m_cellWidth, (cellY * m_cellHeight) + m_cellHeight), room.Name);
-            //                    break;
-            //            }
-            //        }
+                    cellX++;
 
-            //        if(IsSelected(room))
-            //        {
-            //            g.FillRectangle(new SolidBrush(Color.FromArgb(255, 255 - cellColor.R, 255 - cellColor.G, 255 - cellColor.B)), new RectangleF(room.X * m_cellWidth, room.Y * m_cellHeight, m_cellWidth, m_cellHeight));        
-            //        }
-            //        else
-            //        {
-            //            g.FillRectangle(new SolidBrush(cellColor), new RectangleF(cellX * m_cellWidth, cellY * m_cellHeight, m_cellWidth, m_cellHeight));
-            //        }
+                    if (cellX > m_viewport.Right)
+                    {
+                        cellY++;
+                        cellX = (int)m_viewport.Left;
+                    }
+                }
+                Font f = new Font(FontFamily.GenericMonospace, 11 * 1 / m_scale, FontStyle.Bold);
 
-            //        cellX++;
+                foreach (PointF p in cityNames.Keys)
+                {
+                    g.DrawString(cityNames[p], f, new SolidBrush(Color.Black), new PointF(p.X, p.Y));
+                }
 
-            //        if (cellX > m_viewport.Right)
-            //        {
-            //            cellY++;
-            //            cellX = (int)m_viewport.Left;
-            //        }
-            //    }
+            }
 
-            //    Font f = new Font(FontFamily.GenericMonospace, 11 * 1 / m_scale, FontStyle.Bold);
-
-            //    foreach (PointF p in cityNames.Keys)
-            //    {
-            //        g.DrawString(cityNames[p], f, new SolidBrush(Color.Black), new PointF(p.X, p.Y));
-            //    }
-            //}
         }
 
         public bool IsSelected(int x, int y)
@@ -327,8 +328,8 @@ namespace mwClient.Controls
             Rectangle rect;
             bool isSelected = false;
             Point selection = m_selectedCellLocation;
-            int selectionWidth = (int)(m_selectionSize / (m_cellWidth * m_scale));
-            int selectionHeight = (int)(m_selectionSize / (m_cellHeight * m_scale));
+            int selectionWidth = (int)(40 / (m_cellWidth * m_scale));
+            int selectionHeight = (int)(40 / (m_cellHeight * m_scale));
 
             //switch (m_selectionShape)
             //{
@@ -399,7 +400,7 @@ namespace mwClient.Controls
         {
             g.ResetTransform();
 
-            g.DrawRectangle(Pens.Black, ClientRectangle.Left, ClientRectangle.Top, ClientRectangle.Width-1, ClientRectangle.Height-1);
+            g.DrawRectangle(Pens.Black, ClientRectangle.Left, ClientRectangle.Top, ClientRectangle.Width - 1, ClientRectangle.Height - 1);
         }
 
         private void PaintHighlightedCell(Graphics g)
@@ -473,7 +474,7 @@ namespace mwClient.Controls
 
             Matrix savedMatrix = g.Transform.Clone();
             g.ResetTransform();
-            
+
             SizeF stringSize = g.MeasureString(s, m_debugFont);
             RectangleF backgroundRect = new RectangleF(1, 1, stringSize.Width, stringSize.Height);
             g.FillRectangle(m_debugBackgroundBrush, backgroundRect);
@@ -493,10 +494,27 @@ namespace mwClient.Controls
                 int dX = m_mouseLocation.X - m_previousMouseLocation.X;
                 int dY = m_mouseLocation.Y - m_previousMouseLocation.Y;
 
+                //if (m_translateX + dX > mapWidth)
+                //{
+                //    dX =(int)(mapWidth - m_translateX);
+                //}
+                //if (m_translateX + dX < 0)
+                //{
+                //    dX = (int)(-1*m_translateX);
+                //}
+
+                //if (m_translateY + dY > mapWidth)
+                //{
+                //    dY = (int)(mapWidth - m_translateY);
+                //}
+                //if (m_translateY + dY < 0)
+                //{
+                //    dY = (int)(-1 * m_translateY);
+                //}
                 m_translateX += dX;
                 m_translateY += dY;
             }
-            
+
             m_previousMouseLocation = e.Location;
 
             Invalidate();
@@ -601,7 +619,9 @@ namespace mwClient.Controls
             // GridControl
             // 
             this.BackColor = System.Drawing.Color.White;
+            this.MaximumSize = new System.Drawing.Size(512, 512);
             this.ResumeLayout(false);
+
         }
     }
 }

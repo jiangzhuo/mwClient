@@ -28,12 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.gridControl1 = new mwClient.Controls.GridControl();
+            this.SuspendLayout();
+            // 
+            // gridControl1
+            // 
+            this.gridControl1.BackColor = System.Drawing.Color.White;
+            this.gridControl1.Location = new System.Drawing.Point(0, 0);
+            this.gridControl1.Name = "gridControl1";
+            this.gridControl1.Size = new System.Drawing.Size(1532, 1533);
+            this.gridControl1.TabIndex = 0;
+            this.gridControl1.Text = "gridControl1";
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1978, 1758);
+            this.Controls.Add(this.gridControl1);
+            this.Name = "Form1";
             this.Text = "Form1";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private Controls.GridControl gridControl1;
     }
 }
 
