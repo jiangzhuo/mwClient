@@ -52,6 +52,9 @@
     <Compile Include="Controls\Grid.Designer.cs">
       <DependentUpon>Grid.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\GridControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\SplitPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -213,6 +216,7 @@
     <None Include="Resources\imgUp.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\mindway.json" />
     <None Include="Resources\Point.png" />
   </ItemGroup>
   <ItemGroup>
