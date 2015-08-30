@@ -36,7 +36,7 @@
             this.BackColor = System.Drawing.Color.White;
             this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Name = "Grid";
-            this.Size = new System.Drawing.Size(8192, 8192);
+            this.Size = new System.Drawing.Size(800, 800);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Grid_Paint);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Grid_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Grid_MouseMove);

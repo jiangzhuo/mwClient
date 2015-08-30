@@ -74,6 +74,10 @@ namespace mwClient.Controls
 
             Graphics graphics = e.Graphics;
 
+            var panel = this.Parent as Panel;
+            Console.WriteLine(panel.HorizontalScroll.Value);
+            Console.WriteLine(panel.VerticalScroll.Value);
+
             //for (int index = 0; index <= rows; index++)
             //{
             //    int yPos = (index * m_cellSize) + (m_offsetY % m_cellSize);
@@ -92,7 +96,19 @@ namespace mwClient.Controls
             {
 
                 Color cellColor = Color.White;
-                for (int cellX = 0; cellX < rows; cellX++)
+                var cellXStart = (int)panel.HorizontalScroll.Value / m_cellSize;
+                var cellXEnd = (int)((panel.HorizontalScroll.Value + panel.Width) / m_cellSize);
+                var cellYStart = (int)panel.VerticalScroll.Value / m_cellSize;
+                var cellYEnd = (int)((panel.VerticalScroll.Value + panel.Height) / m_cellSize);
+                if (cellXEnd > 512)
+                {
+                    cellXEnd = 512;
+                }
+                if (cellYEnd>512)
+                {
+                    cellYEnd = 512;
+                }
+                for (int cellX = cellXStart; cellX < cellXEnd; cellX++)
                 {
                     for (int cellY = 0; cellY < cols; cellY++)
                     {
@@ -234,7 +250,7 @@ namespace mwClient.Controls
 
             m_lastSelectMousePosition = e.Location;
 
-            Invalidate();
+                Invalidate();
             }
         }
 
@@ -265,7 +281,7 @@ namespace mwClient.Controls
 
                 selection = new Rectangle(m_selectionStartX, m_selectionStartY, m_cellSize, m_cellSize);
 
-                Invalidate();
+            Invalidate();
             //}
         }
 

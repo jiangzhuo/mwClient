@@ -27,5 +27,10 @@ namespace mwClient
                 grid1.mapArray = SimpleJson.SimpleJson.DeserializeObject(result);
             }
         }
+
+        private void panel1_Scroll(object sender, ScrollEventArgs e)
+        {
+            //grid1.Invalidate();
+        }
     }
 }
