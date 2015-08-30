@@ -36,7 +36,7 @@
             this.gridControl1.BackColor = System.Drawing.Color.White;
             this.gridControl1.Location = new System.Drawing.Point(0, 0);
             this.gridControl1.Name = "gridControl1";
-            this.gridControl1.Size = new System.Drawing.Size(1532, 1533);
+            this.gridControl1.Size = new System.Drawing.Size(8192, 8192);
             this.gridControl1.TabIndex = 0;
             this.gridControl1.Text = "gridControl1";
             // 
@@ -44,7 +44,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1978, 1758);
+            this.AutoScroll = true;
+            this.ClientSize = new System.Drawing.Size(778, 744);
             this.Controls.Add(this.gridControl1);
             this.Name = "Form1";
             this.Text = "Form1";

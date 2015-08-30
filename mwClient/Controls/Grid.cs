@@ -21,6 +21,8 @@ namespace mwClient.Controls
         private int m_cellSize = 16;
         private System.Drawing.Point m_origin = new System.Drawing.Point(0, 0);
 
+        public dynamic mapArray;
+
         private Rectangle selection;
         private System.Drawing.Point m_lastMousePosition;
         private System.Drawing.Point m_lastSelectMousePosition;
@@ -72,18 +74,56 @@ namespace mwClient.Controls
 
             Graphics graphics = e.Graphics;
 
-            for (int index = 0; index <= rows; index++)
+            //for (int index = 0; index <= rows; index++)
+            //{
+            //    int yPos = (index * m_cellSize) + (m_offsetY % m_cellSize);
+
+            //    graphics.DrawLine(m_gridPen, new System.Drawing.Point(0, yPos), new System.Drawing.Point(width, yPos));
+            //}
+
+            //for (int index = 0; index <= cols; index++)
+            //{
+            //    int xPos = (index * m_cellSize) + (m_offsetX % m_cellSize);
+
+            //    graphics.DrawLine(m_gridPen, new System.Drawing.Point(xPos, 0), new System.Drawing.Point(xPos, width));
+            //}
+
+            if (mapArray != null)
             {
-                int yPos = (index * m_cellSize) + (m_offsetY % m_cellSize);
 
-                graphics.DrawLine(m_gridPen, new System.Drawing.Point(0, yPos), new System.Drawing.Point(width, yPos));
-            }
+                Color cellColor = Color.White;
+                for (int cellX = 0; cellX < rows; cellX++)
+                {
+                    for (int cellY = 0; cellY < cols; cellY++)
+                    {
 
-            for (int index = 0; index <= cols; index++)
-            {
-                int xPos = (index * m_cellSize) + (m_offsetX % m_cellSize);
+                        var cellType = mapArray[cellX][cellY];
+                        //colorPercent = room.Height / m_world.TerrainHeight;
+                        var colorPercent = 1;
+                        var rgb = (int)Math.Max(Math.Min(255 * Math.Abs(colorPercent), 255), 0);
 
-                graphics.DrawLine(m_gridPen, new System.Drawing.Point(xPos, 0), new System.Drawing.Point(xPos, width));
+                        switch ((TerrainTypes)cellType)
+                        {
+                            case TerrainTypes.Water:
+                                cellColor = Color.CadetBlue;
+                                break;
+                            case TerrainTypes.Land:
+                                cellColor = Color.Yellow;
+                                break;
+                            case TerrainTypes.ThroneOuter:
+                                cellColor = Color.DarkGreen;
+                                break;
+                            case TerrainTypes.ThroneInner:
+                                cellColor = Color.Gray;
+                                break;
+                            case TerrainTypes.Board:
+                                cellColor = Color.Black;
+                                break;
+                        }
+
+                        graphics.FillRectangle(new SolidBrush(cellColor), new RectangleF(cellX * m_cellSize, cellY * m_cellSize, m_cellSize, m_cellSize));
+                    }
+                }
             }
 
             Rectangle client = ClientRectangle;
@@ -111,11 +151,11 @@ namespace mwClient.Controls
 
         private void Grid_MouseUp(object sender, MouseEventArgs e)
         {
-            if (m_dragging)
-            {
-                m_dragging = false;
-                Invalidate();
-            }
+            //if (m_dragging)
+            //{
+            //    m_dragging = false;
+            //    Invalidate();
+            //}
             if (m_selecting)
             {
                 m_selecting = false;
@@ -154,60 +194,59 @@ namespace mwClient.Controls
 
         private void Grid_MouseMove(object sender, MouseEventArgs e)
         {
-            if (m_dragging)
-            {
-                Point p = e.Location;
+            //if (m_dragging)
+            //{
+            //    Point p = e.Location;
 
-                m_deltaX = p.X - m_lastMousePosition.X;
-                m_deltaY = p.Y - m_lastMousePosition.Y;
+            //    m_deltaX = p.X - m_lastMousePosition.X;
+            //    m_deltaY = p.Y - m_lastMousePosition.Y;
 
-                m_offsetX += m_deltaX;
-                m_offsetY += m_deltaY;
+            //    m_offsetX += m_deltaX;
+            //    m_offsetY += m_deltaY;
 
-                selection.X += m_deltaX;
-                selection.Y += m_deltaY;
+            //    selection.X += m_deltaX;
+            //    selection.Y += m_deltaY;
 
-                // I changed this from ceiling to Floor.  It made more sense to me to have this represent the # of
-                // whole cells offset from the viewport and not to include a partial cell in this.  It shouldn't be too
-                // hard to flip this in the other direction, if you wanted tho.
-                m_cellOffsetX = m_offsetX / m_cellSize;
-                m_cellOffsetY = (int)System.Math.Floor((double)m_offsetY / (double)m_cellSize);
+            //    // I changed this from ceiling to Floor.  It made more sense to me to have this represent the # of
+            //    // whole cells offset from the viewport and not to include a partial cell in this.  It shouldn't be too
+            //    // hard to flip this in the other direction, if you wanted tho.
+            //    m_cellOffsetX = m_offsetX / m_cellSize;
+            //    m_cellOffsetY = (int)System.Math.Floor((double)m_offsetY / (double)m_cellSize);
+            //    m_lastMousePosition = (e.Location);
 
-                m_lastMousePosition = (e.Location);
-
-                Invalidate();
-            }
+            //    Invalidate();
+            //}
             if (m_selecting)
             {
                 Point p = e.Location;
-                // TODO: Improved pointer tracking
+            // TODO: Improved pointer tracking
 
-                m_selectDeltaX = p.X - m_lastSelectMousePosition.X;
-                m_selectDeltaY = p.Y - m_lastSelectMousePosition.Y;
+            m_selectDeltaX = p.X - m_lastSelectMousePosition.X;
+            m_selectDeltaY = p.Y - m_lastSelectMousePosition.Y;
 
-                m_selectionOffsetX += m_selectDeltaX;
-                m_selectionOffsetY += m_selectDeltaY;
+            m_selectionOffsetX += m_selectDeltaX;
+            m_selectionOffsetY += m_selectDeltaY;
 
-                selection.Height = System.Math.Abs(m_cellSize + m_selectionOffsetY + m_selectDeltaY);
-                selection.Width = System.Math.Abs(m_cellSize + m_selectionOffsetX + m_selectDeltaX);
-                selection.X = System.Math.Min(m_selectionStartX, m_selectionStartX + m_cellSize + m_selectionOffsetX + m_selectDeltaX);
-                selection.Y = System.Math.Min(m_selectionStartY, m_selectionStartY + m_cellSize + m_selectionOffsetY + m_selectDeltaY);
+            selection.Height = System.Math.Abs(m_cellSize + m_selectionOffsetY + m_selectDeltaY);
+            selection.Width = System.Math.Abs(m_cellSize + m_selectionOffsetX + m_selectDeltaX);
+            selection.X = System.Math.Min(m_selectionStartX, m_selectionStartX + m_cellSize + m_selectionOffsetX + m_selectDeltaX);
+            selection.Y = System.Math.Min(m_selectionStartY, m_selectionStartY + m_cellSize + m_selectionOffsetY + m_selectDeltaY);
 
-                m_lastSelectMousePosition = e.Location;
+            m_lastSelectMousePosition = e.Location;
 
-                Invalidate();
+            Invalidate();
             }
         }
 
         private void Grid_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
-            {
-                m_dragging = true;
-                m_lastMousePosition = (e.Location);
-            }
-            else if (e.Button == MouseButtons.Left)
-            {
+            //if (e.Button == MouseButtons.Right)
+            //{
+            //    m_dragging = true;
+            //    m_lastMousePosition = (e.Location);
+            //}
+            //else if (e.Button == MouseButtons.Left)
+            //{
                 m_selecting = true;
                 m_lastSelectMousePosition = e.Location;
                 m_selectDeltaX = 0;
@@ -227,7 +266,7 @@ namespace mwClient.Controls
                 selection = new Rectangle(m_selectionStartX, m_selectionStartY, m_cellSize, m_cellSize);
 
                 Invalidate();
-            }
+            //}
         }
 
         private int GetPartialCellSizeX()

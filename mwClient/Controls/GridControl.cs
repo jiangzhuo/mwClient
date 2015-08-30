@@ -173,8 +173,8 @@ namespace mwClient.Controls
             m_translateStep = 10.0f;
             m_scaleStep = 1.1f;
             m_rotateStep = 15.0f;
-            m_scaleMin = (float)System.Math.Pow(m_scaleStep, -15.0f);
-            m_scaleMax = (float)System.Math.Pow(m_scaleStep, 15.0f);
+            m_scaleMin = (float)System.Math.Pow(m_scaleStep, -8.0f);
+            m_scaleMax = (float)System.Math.Pow(m_scaleStep, 0.0f);
 
             m_mouseLocation = new Point(0, 0);
             m_highlightedCellLocation = new Point(0, 0);
@@ -196,17 +196,10 @@ namespace mwClient.Controls
         protected override void OnPaint(PaintEventArgs e)
         {
             Matrix m = e.Graphics.Transform.Clone();
-            //if (m_translateX > 0)
-            //{
-            //    m_translateX = 0;
-            //}
-            //if (m_translateY > 0)
-            //{
-            //    m_translateY = 0;
-            //}
 
-            m.Translate(m_translateX, m_translateY);
-            m.Scale(m_scale, m_scale);
+            m.Translate(m_translateX, m_translateY, MatrixOrder.Append);
+            m.Scale(m_scale, m_scale, MatrixOrder.Append);
+
             m.Rotate(m_rotateAngle);
 
             e.Graphics.Transform = m;
@@ -245,7 +238,7 @@ namespace mwClient.Controls
                 for (int index = 0; index < totalCells; index++)
                 {
 
-                    if (cellX < 0 || cellY < 0 || cellX >= 512 || cellY >= 512)
+                    if (cellX < 0 || cellY < 0 || cellX >= mapWidth || cellY >= mapHeight)
                     {
                     }
                     else
@@ -260,7 +253,7 @@ namespace mwClient.Controls
                         switch ((TerrainTypes)cellType)
                         {
                             case TerrainTypes.Water:
-                                cellColor = Color.Blue;
+                                cellColor = Color.CadetBlue;
                                 break;
                             case TerrainTypes.Land:
                                 cellColor = Color.Yellow;
@@ -296,7 +289,7 @@ namespace mwClient.Controls
                         }
                         if (IsSelected(selectPos.X, selectPos.Y))
                         {
-                            g.FillRectangle(new SolidBrush(Color.FromArgb(255, 255 - cellColor.R, 255 - cellColor.G, 255 - cellColor.B)), new RectangleF(selectPos.X * m_cellWidth, selectPos.Y * m_cellHeight, m_cellWidth, m_cellHeight));
+                            g.FillRectangle(new SolidBrush(Color.Black), new RectangleF(selectPos.X * m_cellWidth, selectPos.Y * m_cellHeight, m_cellWidth, m_cellHeight));
                         }
                         else
                         {
@@ -619,7 +612,7 @@ namespace mwClient.Controls
             // GridControl
             // 
             this.BackColor = System.Drawing.Color.White;
-            this.MaximumSize = new System.Drawing.Size(512, 512);
+            //this.MaximumSize = new System.Drawing.Size(512, 512);
             this.ResumeLayout(false);
 
         }
