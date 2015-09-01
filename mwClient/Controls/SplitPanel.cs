@@ -48,10 +48,7 @@ namespace mwClient.Controls
 
         private void btnHide_Click(object sender, EventArgs e)
         {
-            if (Close != null)
-            {
-                Close(sender, e);
-            }
+
         }
 
         private void btnToggle_Click(object sender, EventArgs e)

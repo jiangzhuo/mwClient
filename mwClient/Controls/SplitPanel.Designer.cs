@@ -48,6 +48,7 @@
             this.btnToggle.Size = new System.Drawing.Size(25, 25);
             this.btnToggle.TabIndex = 7;
             this.btnToggle.UseVisualStyleBackColor = true;
+            this.btnToggle.Click += new System.EventHandler(this.btnToggle_Click);
             // 
             // btnHide
             // 
@@ -61,6 +62,7 @@
             this.btnHide.Size = new System.Drawing.Size(25, 25);
             this.btnHide.TabIndex = 6;
             this.btnHide.UseVisualStyleBackColor = true;
+            this.btnHide.Click += new System.EventHandler(this.btnHide_Click);
             // 
             // lblCaption
             // 
