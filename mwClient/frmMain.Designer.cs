@@ -44,10 +44,10 @@
             this.txtOutput = new System.Windows.Forms.RichTextBox();
             this.splitTop = new System.Windows.Forms.Splitter();
             this.pnlTop = new System.Windows.Forms.Panel();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.splitPanelTop = new mwClient.Controls.SplitPanel();
             this.pnlTopCollapsed = new System.Windows.Forms.Panel();
             this.btnTopShow = new System.Windows.Forms.Button();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel1.SuspendLayout();
             this.pnlMain.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -110,7 +110,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 28);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(982, 777);
+            this.tabPage2.Size = new System.Drawing.Size(972, 767);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -201,6 +201,7 @@
             // 
             this.splitTop.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.splitTop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.splitTop.Enabled = false;
             this.splitTop.Location = new System.Drawing.Point(0, 204);
             this.splitTop.Name = "splitTop";
             this.splitTop.Size = new System.Drawing.Size(1386, 3);
@@ -218,13 +219,21 @@
             this.pnlTop.Size = new System.Drawing.Size(1386, 204);
             this.pnlTop.TabIndex = 6;
             // 
+            // flowLayoutPanel1
+            // 
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 65);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1386, 139);
+            this.flowLayoutPanel1.TabIndex = 13;
+            // 
             // splitPanelTop
             // 
             this.splitPanelTop.Caption = null;
             this.splitPanelTop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.splitPanelTop.Location = new System.Drawing.Point(0, 28);
+            this.splitPanelTop.Location = new System.Drawing.Point(0, 35);
             this.splitPanelTop.Name = "splitPanelTop";
-            this.splitPanelTop.Size = new System.Drawing.Size(1386, 25);
+            this.splitPanelTop.Size = new System.Drawing.Size(1386, 30);
             this.splitPanelTop.TabIndex = 1;
             this.splitPanelTop.Close += new System.Action<object, System.EventArgs>(this.splitPanelTop_Close);
             this.splitPanelTop.Minimize += new System.Action<object, System.EventArgs>(this.splitPanelTop_Minimize);
@@ -237,7 +246,7 @@
             this.pnlTopCollapsed.Margin = new System.Windows.Forms.Padding(0);
             this.pnlTopCollapsed.Name = "pnlTopCollapsed";
             this.pnlTopCollapsed.Padding = new System.Windows.Forms.Padding(2);
-            this.pnlTopCollapsed.Size = new System.Drawing.Size(1386, 28);
+            this.pnlTopCollapsed.Size = new System.Drawing.Size(1386, 35);
             this.pnlTopCollapsed.TabIndex = 12;
             this.pnlTopCollapsed.Visible = false;
             // 
@@ -251,20 +260,12 @@
             this.btnTopShow.Location = new System.Drawing.Point(2, 2);
             this.btnTopShow.Margin = new System.Windows.Forms.Padding(0);
             this.btnTopShow.Name = "btnTopShow";
-            this.btnTopShow.Size = new System.Drawing.Size(102, 24);
+            this.btnTopShow.Size = new System.Drawing.Size(102, 31);
             this.btnTopShow.TabIndex = 0;
             this.btnTopShow.Text = "Top Panel";
             this.btnTopShow.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnTopShow.UseVisualStyleBackColor = true;
             this.btnTopShow.Click += new System.EventHandler(this.btnTopShow_Click);
-            // 
-            // flowLayoutPanel1
-            // 
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 53);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1386, 151);
-            this.flowLayoutPanel1.TabIndex = 13;
             // 
             // frmMain
             // 
@@ -275,6 +276,7 @@
             this.Name = "frmMain";
             this.Padding = new System.Windows.Forms.Padding(5);
             this.Text = "frmMain";
+            this.Load += new System.EventHandler(this.frmMain_Load);
             this.panel1.ResumeLayout(false);
             this.pnlMain.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);

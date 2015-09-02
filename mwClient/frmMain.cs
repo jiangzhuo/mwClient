@@ -1,10 +1,17 @@
-﻿using System;
+﻿using log4net;
+using log4net.Appender;
+using log4net.Config;
+using log4net.Core;
+using log4net.Layout;
+using SimpleJson;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -20,11 +27,72 @@ namespace mwClient
 
     public partial class frmMain : Form
     {
+        private UserData userData;
+
         public frmMain()
         {
             InitializeComponent();
         }
+        private static string locPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        private static string dskPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+        private RichTextBoxAppender rba;
+        //private MessageBoxAppender mba;
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger
+    (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
+        public frmMain(UserData userData)
+        {
+            this.userData = userData;
+            InitializeComponent();
+
+            //if (!Global.logger.Logger.Repository.Configured)
+            //{
+                rba = new RichTextBoxAppender(txtOutput);
+                rba.Threshold = Level.All;
+                rba.Layout = new PatternLayout("%date{dd-MM-yyyy HH:mm:ss.fff} %5level %message %n");
+                LevelTextStyle ilts = new LevelTextStyle();
+                ilts.Level = Level.Info;
+                ilts.TextColor = Color.Yellow;
+                ilts.PointSize = 10.0f;
+                rba.AddMapping(ilts);
+                LevelTextStyle dlts = new LevelTextStyle();
+                dlts.Level = Level.Debug;
+                dlts.TextColor = Color.LightBlue;
+                dlts.PointSize = 10.0f;
+                rba.AddMapping(dlts);
+                LevelTextStyle wlts = new LevelTextStyle();
+                wlts.Level = Level.Warn;
+                wlts.TextColor = Color.Chartreuse;
+                wlts.PointSize = 10.0f;
+                rba.AddMapping(wlts);
+                LevelTextStyle elts = new LevelTextStyle();
+                elts.Level = Level.Error;
+                elts.TextColor = Color.Crimson;
+                elts.BackColor = Color.Cornsilk;
+                elts.PointSize = 10.0f;
+                rba.AddMapping(elts);
+            
+                BasicConfigurator.Configure(rba);
+                rba.ActivateOptions();
+
+                //mba = new MessageBoxAppender();
+                //mba.Layout = new PatternLayout("%date{dd-MM-yyyy HH:mm:ss.fff} %5level %message %n");
+                //mba.Threshold = Level.Error;
+                //BasicConfigurator.Configure(mba);
+                //mba.ActivateOptions();
+
+                RollingFileAppender fa = new RollingFileAppender();
+                fa.AppendToFile = true;
+                fa.Threshold = log4net.Core.Level.All;
+                fa.RollingStyle = RollingFileAppender.RollingMode.Size;
+                fa.MaxFileSize = 100000;
+                fa.MaxSizeRollBackups = 3;
+                fa.File = dskPath + @"\FgPleoraLog.txt";
+                fa.Layout = new log4net.Layout.PatternLayout("%date{dd-MM-yyyy HH:mm:ss.fff} %5level %message (%logger{1}:%line)%n");
+                log4net.Config.BasicConfigurator.Configure(fa);
+                fa.ActivateOptions();
+            //}
+        }
 
         private void btnTopShow_Click(object sender, EventArgs e)
         {
@@ -83,5 +151,61 @@ namespace mwClient
             Properties.Settings.Default.Save();
         }
 
+        private void frmMain_Load(object sender, EventArgs e)
+        {
+            Console.WriteLine("gameplay loaded");
+            Console.WriteLine(userData.ResultString);
+            log.Debug("login success");
+            var thread = new Thread(new ThreadStart(connectorEntry));
+            thread.Start();
+        }
+        private void connectorEntry()
+        {
+            log.Debug("beginEntry connecting to connector");
+            var client = userData.client;
+            client.initClient(userData.host, userData.port, () =>
+            {
+                log.Debug("client connecting");
+                client.connect(null, data =>
+                {
+                    log.Debug("client connected");
+                    log.Debug(data.ToString());
+                    Console.WriteLine("on data back" + data.ToString());
+                    var msg = new JsonObject();
+                    msg["token"] = userData.token;
+                    client.request("connector.entryHandler.entry", msg, OnEntry);
+                });
+            });
+        }
+
+        private void OnEntry(dynamic result)
+        {
+            Console.WriteLine("onEntry");
+            Console.WriteLine(result);
+            if (result.code != 200)
+            {
+                log.Debug("onEntry error:" + result.code);
+                return;
+            }
+            userData.playerId = result.id;
+            //            Console.WriteLine(userData.uid);
+            userData.uid = result.uid;
+            userData.areaId = result.areaId;
+            entryArea();
+        }
+
+        private void entryArea()
+        {
+            var msg = new JsonObject();
+            userData.client.request("area.playerHandler.enterArea", msg, result =>
+            {
+                Console.WriteLine("enterArea result");
+                Console.WriteLine(result);
+            });
+        }
+
+        public void Output(string output)
+        {
+        }
     }
 }

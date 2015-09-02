@@ -16,8 +16,10 @@ namespace mwClient
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = false;
             //Application.Run(new Form1());
-            Application.Run(new frmMain());
+            //Application.Run(new frmMain());
+            Application.Run(new GateLogin());
             //Application.Run(new Form2());
 
         }

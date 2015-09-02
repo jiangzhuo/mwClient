@@ -25,7 +25,7 @@ namespace mwClient.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("25")]
+        [global::System.Configuration.DefaultSettingValueAttribute("250")]
         public int TopPanelHeight {
             get {
                 return ((int)(this["TopPanelHeight"]));
@@ -37,7 +37,7 @@ namespace mwClient.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("25")]
+        [global::System.Configuration.DefaultSettingValueAttribute("28")]
         public int LeftPanelWidth {
             get {
                 return ((int)(this["LeftPanelWidth"]));
@@ -49,7 +49,7 @@ namespace mwClient.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("25")]
+        [global::System.Configuration.DefaultSettingValueAttribute("28")]
         public int RightPanelWidth {
             get {
                 return ((int)(this["RightPanelWidth"]));
@@ -61,7 +61,7 @@ namespace mwClient.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("25")]
+        [global::System.Configuration.DefaultSettingValueAttribute("28")]
         public int BottomPanelHeight {
             get {
                 return ((int)(this["BottomPanelHeight"]));
