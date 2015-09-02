@@ -36,7 +36,7 @@ namespace mwClient
         private static string locPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         private static string dskPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
         private RichTextBoxAppender rba;
-        //private MessageBoxAppender mba;
+        private MessageBoxAppender mba;
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger
     (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -75,13 +75,13 @@ namespace mwClient
                 BasicConfigurator.Configure(rba);
                 rba.ActivateOptions();
 
-                //mba = new MessageBoxAppender();
-                //mba.Layout = new PatternLayout("%date{dd-MM-yyyy HH:mm:ss.fff} %5level %message %n");
-                //mba.Threshold = Level.Error;
-                //BasicConfigurator.Configure(mba);
-                //mba.ActivateOptions();
+            mba = new MessageBoxAppender();
+            mba.Layout = new PatternLayout("%date{dd-MM-yyyy HH:mm:ss.fff} %5level %message %n");
+            mba.Threshold = Level.Error;
+            BasicConfigurator.Configure(mba);
+            mba.ActivateOptions();
 
-                RollingFileAppender fa = new RollingFileAppender();
+            RollingFileAppender fa = new RollingFileAppender();
                 fa.AppendToFile = true;
                 fa.Threshold = log4net.Core.Level.All;
                 fa.RollingStyle = RollingFileAppender.RollingMode.Size;
