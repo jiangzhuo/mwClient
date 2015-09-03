@@ -109,8 +109,8 @@ namespace mwClient
                 }
                 else
                 {
-                    userData.uid = loginResult.uid;
-                    userData.token = loginResult.token;
+                    userData.Uid = loginResult.uid;
+                    userData.Token = loginResult.token;
                 }
 
                 client.initClient(serverHostCb.SelectedItem.ToString(), Convert.ToInt32(portTb.Text),
@@ -123,7 +123,7 @@ namespace mwClient
                             statusLbl.Text += data.ToString();
                             Console.WriteLine("on data back" + data.ToString());
                             var msg = new JsonObject();
-                            msg["uid"] = userData.uid;
+                            msg["uid"] = userData.Uid;
                             client.request("gate.gateHandler.queryEntry", msg, OnQuery);
                         });
                     });
@@ -142,8 +142,8 @@ namespace mwClient
                 return;
             }
             userData.ResultString = result.ToString();
-            userData.host = result.host;
-            userData.port = Convert.ToInt32(result.port);
+            userData.Host = result.host;
+            userData.Port = Convert.ToInt32(result.port);
             //            var newWindowThread = new Thread(new
             //                                                 ThreadStart(() =>
             //                                                 {

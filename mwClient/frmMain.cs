@@ -153,8 +153,8 @@ namespace mwClient
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            Console.WriteLine("gameplay loaded");
-            Console.WriteLine(userData.ResultString);
+            log.Debug("gameplay loaded");
+            log.Debug(userData.ResultString);
             log.Debug("login success");
             var thread = new Thread(new ThreadStart(connectorEntry));
             thread.Start();
@@ -163,16 +163,16 @@ namespace mwClient
         {
             log.Debug("beginEntry connecting to connector");
             var client = userData.client;
-            client.initClient(userData.host, userData.port, () =>
+            client.initClient(userData.Host, userData.Port, () =>
             {
                 log.Debug("client connecting");
                 client.connect(null, data =>
                 {
                     log.Debug("client connected");
                     log.Debug(data.ToString());
-                    Console.WriteLine("on data back" + data.ToString());
+                    log.Debug("on data back" + data.ToString());
                     var msg = new JsonObject();
-                    msg["token"] = userData.token;
+                    msg["token"] = userData.Token;
                     client.request("connector.entryHandler.entry", msg, OnEntry);
                 });
             });
@@ -180,17 +180,17 @@ namespace mwClient
 
         private void OnEntry(dynamic result)
         {
-            Console.WriteLine("onEntry");
-            Console.WriteLine(result);
+            log.Debug("onEntry");
+            log.Debug(result);
             if (result.code != 200)
             {
                 log.Debug("onEntry error:" + result.code);
                 return;
             }
-            userData.playerId = result.id;
+            userData.PlayerId = result.player.id;
             //            Console.WriteLine(userData.uid);
-            userData.uid = result.uid;
-            userData.areaId = result.areaId;
+            userData.Uid = result.player.uid;
+            userData.AreaId = (int)result.player.areaId;
             entryArea();
         }
 
@@ -199,8 +199,8 @@ namespace mwClient
             var msg = new JsonObject();
             userData.client.request("area.playerHandler.enterArea", msg, result =>
             {
-                Console.WriteLine("enterArea result");
-                Console.WriteLine(result);
+                log.Debug("enterArea result");
+                log.Debug(result);
             });
         }
 
