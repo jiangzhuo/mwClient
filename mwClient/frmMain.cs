@@ -163,7 +163,7 @@ namespace mwClient
         {
             log.Debug("beginEntry connecting to connector");
             var client = userData.client;
-            client.initClient(userData.Host, userData.Port, () =>
+            client.initClient(userData.Host, (int)userData.Port, () =>
             {
                 log.Debug("client connecting");
                 client.connect(null, data =>
@@ -201,6 +201,7 @@ namespace mwClient
             {
                 log.Debug("enterArea result");
                 log.Debug(result);
+                userData.ProcessenterAreaResult(result);
             });
         }
 
