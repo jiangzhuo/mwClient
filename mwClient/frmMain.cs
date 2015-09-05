@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -207,6 +208,25 @@ namespace mwClient
 
         public void Output(string output)
         {
+        }
+
+        private void tabControl1_Selected(object sender, TabControlEventArgs e)
+        {
+            Console.WriteLine(111111);
+            if (e.TabPageIndex == 1)
+            {
+                //this.gridContainerPanel.sc
+            }
+        }
+
+        private void grid1_Load(object sender, EventArgs e)
+        {
+            using (Stream stream = new MemoryStream(Properties.Resources.mindway))
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                string result = reader.ReadToEnd();
+                grid1.mapArray = SimpleJson.SimpleJson.DeserializeObject(result);
+            }
         }
     }
 }

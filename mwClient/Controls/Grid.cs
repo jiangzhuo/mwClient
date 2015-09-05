@@ -145,21 +145,21 @@ namespace mwClient.Controls
             Rectangle client = ClientRectangle;
             client.Inflate(200, 200);
 
-            if (client.Contains(new System.Drawing.Point(m_offsetX, m_offsetY)))
-            {
-                graphics.DrawString("(0, 0) (" + m_cellOffsetX + ", " + m_cellOffsetY + ")",
-                        new Font("Arial", 20), Brushes.Black,
-                        new Point(m_offsetX, m_offsetY));
+            //if (client.Contains(new System.Drawing.Point(m_offsetX, m_offsetY)))
+            //{
+                //graphics.DrawString("(0, 0) (" + m_cellOffsetX + ", " + m_cellOffsetY + ")",
+                //        new Font("Arial", 20), Brushes.Black,
+                //        new Point(m_offsetX, m_offsetY));
 
-                graphics.DrawEllipse(Pens.Black, new Rectangle(new Point(m_offsetX - 4, m_offsetY - 4), new Size(8, 8)));
-            }
+                //graphics.DrawEllipse(Pens.Black, new Rectangle(new Point(m_offsetX - 4, m_offsetY - 4), new Size(8, 8)));
+            //}
 
-            int selectedSizeX = selection.Width / m_cellSize;
-            int selectedSizeY = selection.Height / m_cellSize;
+            //int selectedSizeX = selection.Width / m_cellSize;
+            //int selectedSizeY = selection.Height / m_cellSize;
 
-            graphics.DrawString("(" + m_selectedX + "," + m_selectedY + ") (" + selectedSizeX + ", " + selectedSizeY + ")",
-                    new Font("Arial", 20), Brushes.Black,
-                    new Point(0, this.Height - 35));
+            //graphics.DrawString("(" + m_selectedX + "," + m_selectedY + ") (" + selectedSizeX + ", " + selectedSizeY + ")",
+            //        new Font("Arial", 20), Brushes.Black,
+            //        new Point(0, this.Height - 35));
 
 
             graphics.DrawRectangle(m_selectionPen, selection);

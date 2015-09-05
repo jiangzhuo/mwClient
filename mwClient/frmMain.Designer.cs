@@ -33,6 +33,8 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.gridContainerPanel = new System.Windows.Forms.Panel();
+            this.grid1 = new mwClient.Controls.Grid();
             this.splitRight = new System.Windows.Forms.Splitter();
             this.pnlRight = new System.Windows.Forms.Panel();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
@@ -51,6 +53,8 @@
             this.panel1.SuspendLayout();
             this.pnlMain.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.gridContainerPanel.SuspendLayout();
             this.pnlRight.SuspendLayout();
             this.pnlLeft.SuspendLayout();
             this.pnlBottom.SuspendLayout();
@@ -94,6 +98,7 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(980, 799);
             this.tabControl1.TabIndex = 0;
+            this.tabControl1.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControl1_Selected);
             // 
             // tabPage1
             // 
@@ -107,6 +112,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.gridContainerPanel);
             this.tabPage2.Location = new System.Drawing.Point(4, 28);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -114,6 +120,26 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // gridContainerPanel
+            // 
+            this.gridContainerPanel.AutoScroll = true;
+            this.gridContainerPanel.Controls.Add(this.grid1);
+            this.gridContainerPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridContainerPanel.Location = new System.Drawing.Point(3, 3);
+            this.gridContainerPanel.Name = "gridContainerPanel";
+            this.gridContainerPanel.Size = new System.Drawing.Size(966, 761);
+            this.gridContainerPanel.TabIndex = 2;
+            // 
+            // grid1
+            // 
+            this.grid1.BackColor = System.Drawing.Color.White;
+            this.grid1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.grid1.Location = new System.Drawing.Point(0, 0);
+            this.grid1.Name = "grid1";
+            this.grid1.Size = new System.Drawing.Size(12288, 12288);
+            this.grid1.TabIndex = 0;
+            this.grid1.Load += new System.EventHandler(this.grid1_Load);
             // 
             // splitRight
             // 
@@ -280,6 +306,8 @@
             this.panel1.ResumeLayout(false);
             this.pnlMain.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            this.gridContainerPanel.ResumeLayout(false);
             this.pnlRight.ResumeLayout(false);
             this.pnlLeft.ResumeLayout(false);
             this.pnlBottom.ResumeLayout(false);
@@ -311,5 +339,7 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.Panel gridContainerPanel;
+        private Controls.Grid grid1;
     }
 }
