@@ -1,4 +1,6 @@
-﻿namespace mwClient
+﻿using mwClient.Controls;
+
+namespace mwClient
 {
     partial class frmMain
     {
@@ -33,7 +35,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.gridContainerPanel = new System.Windows.Forms.Panel();
+            this.gridContainerPanel = new AutoScrollPanel();
             this.grid1 = new mwClient.Controls.Grid();
             this.splitRight = new System.Windows.Forms.Splitter();
             this.pnlRight = new System.Windows.Forms.Panel();

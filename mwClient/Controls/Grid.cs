@@ -165,6 +165,16 @@ namespace mwClient.Controls
             graphics.DrawRectangle(m_selectionPen, selection);
         }
 
+
+        public void scrollToPosition(int x, int y)
+        {
+            this.Focus();
+            var panel = this.Parent as Panel;
+            panel.HorizontalScroll.Value = (int)(x * m_cellSize + panel.Width / 2);
+            panel.VerticalScroll.Value = (int)(y * m_cellSize + panel.Height/2);
+            Invalidate();
+        }
+
         private void Grid_MouseUp(object sender, MouseEventArgs e)
         {
             //if (m_dragging)

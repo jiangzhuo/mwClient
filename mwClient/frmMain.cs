@@ -215,8 +215,9 @@ namespace mwClient
             Console.WriteLine(111111);
             if (e.TabPageIndex == 1)
             {
-                //this.gridContainerPanel.sc
+                //this.gridContainerPanel.AutoScrollPosition = new Point(-3000, -100);
             }
+            grid1.Focus();
         }
 
         private void grid1_Load(object sender, EventArgs e)
@@ -227,6 +228,8 @@ namespace mwClient
                 string result = reader.ReadToEnd();
                 grid1.mapArray = SimpleJson.SimpleJson.DeserializeObject(result);
             }
+
+            grid1.scrollToPosition(100, 100);
         }
     }
 }
