@@ -35,7 +35,7 @@ namespace mwClient
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.gridContainerPanel = new AutoScrollPanel();
+            this.gridContainerPanel = new mwClient.Controls.AutoScrollPanel();
             this.grid1 = new mwClient.Controls.Grid();
             this.splitRight = new System.Windows.Forms.Splitter();
             this.pnlRight = new System.Windows.Forms.Panel();
@@ -130,8 +130,10 @@ namespace mwClient
             this.gridContainerPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridContainerPanel.Location = new System.Drawing.Point(3, 3);
             this.gridContainerPanel.Name = "gridContainerPanel";
+            this.gridContainerPanel.ScrollLocation = new System.Drawing.Point(0, 0);
             this.gridContainerPanel.Size = new System.Drawing.Size(966, 761);
             this.gridContainerPanel.TabIndex = 2;
+            this.gridContainerPanel.Scroll += new System.Windows.Forms.ScrollEventHandler(this.gridContainerPanel_Scroll);
             // 
             // grid1
             // 
@@ -341,7 +343,7 @@ namespace mwClient
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Panel gridContainerPanel;
         private Controls.Grid grid1;
+        private AutoScrollPanel gridContainerPanel;
     }
 }

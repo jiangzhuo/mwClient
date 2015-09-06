@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,9 +14,23 @@ namespace mwClient.Controls
         {
             Enter += PanelNoScrollOnFocus_Enter;
             Leave += PanelNoScrollOnFocus_Leave;
+            Scroll += PanelNoScrollOnFocus_Leave;
         }
 
         private System.Drawing.Point scrollLocation;
+
+        public Point ScrollLocation
+        {
+            get
+            {
+                return scrollLocation;
+            }
+
+            set
+            {
+                scrollLocation = value;
+            }
+        }
 
         void PanelNoScrollOnFocus_Enter(object sender, System.EventArgs e)
         {

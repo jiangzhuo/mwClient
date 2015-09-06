@@ -75,8 +75,8 @@ namespace mwClient.Controls
             Graphics graphics = e.Graphics;
 
             var panel = this.Parent as Panel;
-            Console.WriteLine(panel.HorizontalScroll.Value);
-            Console.WriteLine(panel.VerticalScroll.Value);
+            //Console.WriteLine(panel.HorizontalScroll.Value);
+            //Console.WriteLine(panel.VerticalScroll.Value);
 
             //for (int index = 0; index <= rows; index++)
             //{
@@ -173,6 +173,12 @@ namespace mwClient.Controls
             panel.HorizontalScroll.Value = (int)(x * m_cellSize + panel.Width / 2);
             panel.VerticalScroll.Value = (int)(y * m_cellSize + panel.Height/2);
             Invalidate();
+        }
+
+        public Point getCenterPostion()
+        {
+            var panel = this.Parent as AutoScrollPanel;
+            return new Point((int)(panel.ScrollLocation.X / m_cellSize), (int)(panel.ScrollLocation.Y / m_cellSize));
         }
 
         private void Grid_MouseUp(object sender, MouseEventArgs e)

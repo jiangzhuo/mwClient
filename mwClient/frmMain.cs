@@ -231,5 +231,15 @@ namespace mwClient
 
             grid1.scrollToPosition(100, 100);
         }
+
+        private void gridContainerPanel_Scroll(object sender, ScrollEventArgs e)
+        {
+            if (e.Type == ScrollEventType.ThumbPosition)
+            {
+                var center=grid1.getCenterPostion();
+                Console.WriteLine(center.X);
+                Console.WriteLine(center.Y);
+            }
+        }
     }
 }
