@@ -38,8 +38,7 @@ namespace mwClient
         private static string dskPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
         private RichTextBoxAppender rba;
         private MessageBoxAppender mba;
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger
-    (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public frmMain(UserData userData)
         {
@@ -154,6 +153,14 @@ namespace mwClient
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+
+            using (Stream stream = new MemoryStream(Properties.Resources.mindway))
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                string result = reader.ReadToEnd();
+                grid1.mapArray = SimpleJson.SimpleJson.DeserializeObject(result);
+            }
+
             log.Debug("gameplay loaded");
             log.Debug(userData.ResultString);
             log.Debug("login success");
@@ -212,12 +219,13 @@ namespace mwClient
             var msg = new JsonObject();
             msg["x"] = x;
             msg["y"] = y;
+            log.Debug("update point:" + x + " " + y);
             userData.client.request("area.mapHandler.updateMap", msg, result =>
               {
-                  log.Debug("updateMap result");
-                  log.Debug(result);
-                  //userData.ProcessUpdateMapResult(result);
-                  
+                  //log.Debug("updateMap result");
+                  //log.Debug(result);
+                  userData.ProcessUpdateMapResult(result,ref grid1.entityArray);
+                  grid1.Invalidate();
               });
         }
 
@@ -237,19 +245,11 @@ namespace mwClient
 
         private void grid1_Load(object sender, EventArgs e)
         {
-            using (Stream stream = new MemoryStream(Properties.Resources.mindway))
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                string result = reader.ReadToEnd();
-                grid1.mapArray = SimpleJson.SimpleJson.DeserializeObject(result);
-            }
-
-            grid1.scrollToPosition(100, 100);
         }
 
         private void gridContainerPanel_Scroll(object sender, ScrollEventArgs e)
         {
-            if (e.Type == ScrollEventType.ThumbPosition)
+            if (e.Type !=ScrollEventType.ThumbTrack)
             {
                 var center=grid1.getCenterPostion();
                 Console.WriteLine(center.X);

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Reflection;
 
 namespace mwClient.Controls
 {
@@ -22,6 +23,7 @@ namespace mwClient.Controls
         private System.Drawing.Point m_origin = new System.Drawing.Point(0, 0);
 
         public dynamic mapArray;
+        public object[,] entityArray=new object[512,512];
 
         private Rectangle selection;
         private System.Drawing.Point m_lastMousePosition;
@@ -43,6 +45,7 @@ namespace mwClient.Controls
 
         private bool m_dragging = false;
         private bool m_selecting = false;
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         Pen m_gridPen = null;
         Pen m_selectionPen = null;
@@ -138,6 +141,15 @@ namespace mwClient.Controls
                         }
 
                         graphics.FillRectangle(new SolidBrush(cellColor), new RectangleF(cellX * m_cellSize, cellY * m_cellSize, m_cellSize, m_cellSize));
+                        if (entityArray[cellX, cellY] != null)
+                        {
+                            var entity = entityArray[cellX, cellY] as SimpleJson.JsonObject;
+                            var sign = char.ToUpper(entity["type"].ToString().ToCharArray()[0]);
+
+                            graphics.DrawString(sign.ToString(),
+                                    new Font("Arial", 10), Brushes.Black,
+                                    new Point(cellX * m_cellSize, cellY * m_cellSize));
+                        }
                     }
                 }
             }
@@ -178,7 +190,7 @@ namespace mwClient.Controls
         public Point getCenterPostion()
         {
             var panel = this.Parent as AutoScrollPanel;
-            return new Point((int)(panel.ScrollLocation.X / m_cellSize), (int)(panel.ScrollLocation.Y / m_cellSize));
+            return new Point((int)((panel.ScrollLocation.X+ panel.Width/ 2) / m_cellSize), (int)((panel.ScrollLocation.Y+panel.Height/2) / m_cellSize));
         }
 
         private void Grid_MouseUp(object sender, MouseEventArgs e)
@@ -291,6 +303,8 @@ namespace mwClient.Controls
 
                 var cellX = (int)System.Math.Floor((((double)m_mouseOffsetX) / ((double)m_cellSize)));
                 var cellY = (int)System.Math.Floor((((double)m_mouseOffsetY) / ((double)m_cellSize)));
+
+            log.Debug("sellected point:"+cellX+" "+cellY);
 
                 m_selectionStartX = cellX * m_cellSize + GetPartialCellSizeX();
                 m_selectionStartY = cellY * m_cellSize + GetPartialCellSizeY();

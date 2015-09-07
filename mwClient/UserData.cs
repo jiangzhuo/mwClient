@@ -6,6 +6,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using SimpleJson;
+using mwClient.Controls;
 
 namespace mwClient
 {
@@ -63,6 +65,8 @@ namespace mwClient
         private Int64 onlineReward;
         private string hashId;
         private Int64 timeZone;
+
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
 
 
@@ -411,6 +415,24 @@ namespace mwClient
             set
             {
                 food = value;
+            }
+        }
+
+        internal void ProcessUpdateMapResult(dynamic result,ref object[,] entityArray)
+        {
+            if (result.code != 200)
+            {
+                log.Error("ProcessUpdateMapResult "+result.code);
+            }
+            else
+            {
+                foreach (var entity in result.entities)
+                {
+                    if (entity.type != "mar" && entity.type != "collectionMarch")
+                    {
+                        entityArray[Convert.ToInt32( entity.x), Convert.ToInt32(entity.y)] = entity;
+                    }
+                }
             }
         }
 
