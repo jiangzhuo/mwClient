@@ -702,7 +702,7 @@ namespace mwClient
             }
         }
 
-        public void ProcessenterAreaResult(dynamic obj)
+        public void ProcessEnterAreaResult(dynamic obj)
         {
             foreach(var kvPair in obj.character)
             {

@@ -202,8 +202,23 @@ namespace mwClient
             {
                 log.Debug("enterArea result");
                 log.Debug(result);
-                userData.ProcessenterAreaResult(result);
+                userData.ProcessEnterAreaResult(result);
+                UpdateMap();
             });
+        }
+
+        private void UpdateMap(int x = 0, int y = 0)
+        {
+            var msg = new JsonObject();
+            msg["x"] = x;
+            msg["y"] = y;
+            userData.client.request("area.mapHandler.updateMap", msg, result =>
+              {
+                  log.Debug("updateMap result");
+                  log.Debug(result);
+                  //userData.ProcessUpdateMapResult(result);
+                  
+              });
         }
 
         public void Output(string output)
@@ -239,6 +254,9 @@ namespace mwClient
                 var center=grid1.getCenterPostion();
                 Console.WriteLine(center.X);
                 Console.WriteLine(center.Y);
+
+                var t = new Thread(() => UpdateMap(center.X, center.Y));
+                t.Start();
             }
         }
     }
